@@ -1,7 +1,26 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+
+export type CatDocument = HydratedDocument<Cat>;
 
 @ObjectType()
+@Schema()
 export class Cat {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => String)
+  _id: string;
+
+  @Field()
+  @Prop()
+  name: string;
+
+  @Field()
+  @Prop()
+  age: number;
+
+  @Field()
+  @Prop()
+  breed: string;
 }
+
+export const CatSchema = SchemaFactory.createForClass(Cat);
